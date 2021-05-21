@@ -3,6 +3,7 @@ on:
   push:
     paths:
     - '.github/workflows/*'
+  workflow_dispatch:
   schedule:
     - cron:  '45 8 * * *'
 
@@ -13,7 +14,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Dependencies
       run: |
-        sudo apt-get install ipcalc 
+        sudo apt-get install ipcalc
     - name: Downloading TOR Exit node list
       run: |
         curl https://check.torproject.org/cgi-bin/TorBulkExitList.py?ip=1.1.1.1 > /tmp/tor.lsv
@@ -30,5 +31,5 @@ jobs:
         destination_folder: '/'
         user_email: 'automated@x4b.net'
         user_name: 'listbuilder'
-        destination_branch: "master"
+        destination_branch: "main"
 

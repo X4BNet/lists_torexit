@@ -1,0 +1,34 @@
+name: Build Database Update
+on:
+  push:
+    paths:
+    - '.github/workflows/*'
+  schedule:
+    - cron:  '45 8 * * *'
+
+jobs:
+  build_and_commit:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Dependencies
+      run: |
+        sudo apt-get install ipcalc
+    - name: Downloading TOR Exit node list
+      run: |
+        curl https://check.torproject.org/cgi-bin/TorBulkExitList.py?ip=1.1.1.1 > /tmp/tor.lsv
+    - name: Build list
+      run: |
+        perl ./helpers/cleanup.pl /tmp/tor.lsv | grep -E '/(2[0-4]|1[0-9]|[0-9])$' > ipv4.txt
+    - name: Push Output of ipv4.txt
+      uses: dmnemec/copy_file_to_another_repo_action@main
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.MY_GITHUB_TOKEN }}
+      with:
+        source_file: 'ipv4.txt'
+        destination_repo: '${{ github.repository }}'
+        destination_folder: '/'
+        user_email: 'automated@x4b.net'
+        user_name: 'listbuilder'
+        destination_branch: "master"
+

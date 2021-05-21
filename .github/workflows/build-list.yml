@@ -20,7 +20,7 @@ jobs:
         curl https://check.torproject.org/torbulkexitlist?ip=1.1.1.1 > /tmp/tor.lsv
     - name: Build list
       run: |
-        perl ./helpers/cleanup.pl /tmp/tor.lsv | grep -E '/(2[0-4]|1[0-9]|[0-9])$' > ipv4.txt
+        perl ./helpers/cleanup.pl /tmp/tor.lsv > ipv4.txt
     - name: Push Output of ipv4.txt
       uses: dmnemec/copy_file_to_another_repo_action@main
       env:

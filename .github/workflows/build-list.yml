@@ -5,7 +5,7 @@ on:
     - '.github/workflows/*'
   workflow_dispatch:
   schedule:
-    - cron:  '45 8 * * *'
+    - cron:  '30 8 * * *'
 
 jobs:
   build_and_commit:

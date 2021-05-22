@@ -1,8 +1,9 @@
-name: Build Database Update
+name: Update X4B.Net processing repo
 on:
   push:
     paths:
     - 'ipv4.txt'
+  workflow_dispatch:
 
 jobs:
   build_and_commit:
